@@ -11,11 +11,6 @@ const baseOption = {
 const userScheme = mongoose.model(
   "user",
   new mongoose.Schema({
-    companyName: {
-      type: String,
-      required: true,
-      trim: true
-    },
     sector: {
       type: String,
       required: true,
@@ -55,6 +50,9 @@ const userScheme = mongoose.model(
       type: String,
       required: true,
       trim: true
+    },
+    avatar: {
+      type: String,
     },
     password: {
       type: String,
