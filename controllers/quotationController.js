@@ -1,32 +1,19 @@
-const quotationModel = require("../models/userModel");
+const quotationModel = require("../models/quotationModel");
 
 module.exports = {
     add: function (req, res) {
         const Quotation = new quotationModel({
-            quotationNUM: req.body.quotationNUM,
+            status: req.body.status,
+            validUntil: req.body.validUntil,
+            date: req.body.date,
+            comment: req.body.comment,
             IDBuyer: req.body.IDBuyer,
+            IDSeller: req.body.IDSeller,
+            quotationNUM: req.body.quotationNUM,
+            companyName: req.body.companyName,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            date: req.body.date,
         });
-        var item1 = {
-            description1: req.body.description1,
-            quantity1: req.body.quantity1
-        }
-        var item2 = {
-            description2: req.body.description2,
-            quantity2: req.body.quantity2
-        }
-        var item3 = {
-            description3: req.body.description3,
-            quantity3: req.body.quantity3
-        }
-        var item4 = {
-            description4: req.body.description4,
-            quantity4: req.body.quantity4
-        }
-        var items = Object.assign(item1, item2, item3, item4)
-        newQuot.details.push(items)
         Quotation.save(function (err) {
             if (err) {
                 res.json({
@@ -35,6 +22,7 @@ module.exports = {
                 });
             } else {
                 res.json({
+
                     state: "OK",
                     msg: "done ! quotation was added"
                 });
@@ -107,7 +95,7 @@ module.exports = {
                 totalPrice5: req.body.totalPrice5,
                 tax: req.body.tax,
                 total: req.body.total,
-                subtotal: req.body.subtotal,
+                subtotal: req.body.subtotal
             },
             function (err, list) {
                 if (err) {
@@ -124,5 +112,68 @@ module.exports = {
             }
         );
     },
+    acceptedStatus: function (req, res) {
+        quotationModel
+            .findByIdAndUpdate({
+                _id: req.params.id
+            }, {
+                status: req.body.status
+            })
+            .then(() => {
+                Quotation.findOne({
+                    _id: req.params.id
+                }).then(answer => {
+                    res.send(answer);
+                });
+            });
+    },
+    DeniedStatus: function (req, res) {
+        quotationModel
+            .findByIdAndUpdate({
+                _id: req.params.id
+            }, {
+                status: req.body.status
+            })
+            .then(() => {
+                Quotation.findOne({
+                    _id: req.params.id
+                }).then(answer => {
+                    res.send(answer);
+                });
+            });
+    },
+    pushDetails: function (req, res) {
+        quotationModel.findOneAndUpdate({
+            _id: req.params.id
+        }, {
+            $push: {
+                details: {
+                    description1: req.body.description1,
+                    quantity1: req.body.quantity1,
+                }
+            }
+        }, function (err) {
+            if (err) {
+                res.json({
+                    state: 'no',
+                    msg: 'vous avez un erreur'
+                })
+            } else {
+                console.log({
 
+                    $push: {
+                        details: {
+                            description1: req.body.description1,
+                            quantity1: req.body.quantity1,
+                        }
+                    }
+
+
+                })
+                res.json({
+                    state: 'yes'
+                })
+            }
+        })
+    },
 };

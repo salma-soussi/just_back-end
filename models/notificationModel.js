@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const notificationScheme = user.discriminator("notification", new mongoose.Schema({
+const notificationScheme = mongoose.model("notification", new mongoose.Schema({
 
     quotationNum: {
         type: String,
@@ -17,7 +17,7 @@ const notificationScheme = user.discriminator("notification", new mongoose.Schem
         type: Date,
         default: Date.now()
     },
-    description1: {
+    description0: {
         type: String,
         required: true,
         trim: true
