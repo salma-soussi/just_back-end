@@ -4,19 +4,47 @@ const details = new mongoose.Schema({
 
     description1: {
         type: String,
-        required:true,
-
-       
+        required: true,
     },
     quantity1: {
         type: String,
-        required:true
-
-       
+        required: true
+    },
+    description2: {
+        type: String,
+        required: true,
+    },
+    quantity2: {
+        type: String,
+        required: true
+    },
+    description3: {
+        type: String,
+        required: true,
+    },
+    quantity3: {
+        type: String,
+        required: true
+    },
+    description4: {
+        type: String,
+        required: true,
+    },
+    quantity4: {
+        type: String,
+        required: true
+    },
+    description5: {
+        type: String,
+        required: true,
+    },
+    quantity5: {
+        type: String,
+        required: true
     },
 
 })
-
+ 
 const quotationScheme = mongoose.model(
     "quotation",
     new mongoose.Schema({

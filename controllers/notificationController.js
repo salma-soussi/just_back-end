@@ -5,10 +5,9 @@ module.exports = {
         const notification = new notificationModel({
 
             quotationNUM: req.body.quotationNUM,
-            comment: req.body.comment,
+            content: req.body.content,
             time: req.body.time,
-            description0: req.body.description0,
-            status: req.body.status,
+            description: req.body.description,
             type: req.body.type,
             seen: req.body.seen,
 
@@ -32,11 +31,7 @@ module.exports = {
         var answerNotif = new notificationModel({
             quotationNum: req.body.quotationNum,
             status: req.body.status,
-            content: req.body.content,
-            time: req.body.time,
-            description1: req.body.description1,
-            type: req.body.type,
-            seen: req.body.seen,
+            
         })
         answerNotif.save((err, answernotif) => {
             if (err) {

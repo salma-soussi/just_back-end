@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const notificationScheme = mongoose.model("notification", new mongoose.Schema({
 
-    quotationNum: {
+    quotationNUM: {
         type: String,
         required: true,
         trim: true
@@ -17,7 +17,7 @@ const notificationScheme = mongoose.model("notification", new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    description0: {
+    description: {
         type: String,
         required: true,
         trim: true

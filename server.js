@@ -9,6 +9,10 @@ const buyerRouter = require("./router/buyerRouter");
 const quotationRouter = require("./router/quotationRouter");
 const notificationRouter = require("./router/notificationRouter");
 const emailRouter = require("./router/emailRouter");
+const sectorRouter = require("./router/sectorRouter");
+const categoryRouter = require("./router/categoryRouter");
+const subcategoryRouter = require("./router/subcategoryRouter");
+const productRouter = require("./router/productRouter");
 
 const app = express();
 
@@ -22,6 +26,10 @@ app.use('/buyer', buyerRouter)
 app.use('/quotation', quotationRouter)
 app.use('/notification', notificationRouter)
 app.use('/email', emailRouter)
+app.use('/sector', sectorRouter)
+app.use('/category', categoryRouter)
+app.use('/subcategory', subcategoryRouter)
+app.use('/product', productRouter)
 
 app.set('secretKey', 'test')
 app.use(cors('*'))

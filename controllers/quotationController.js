@@ -120,7 +120,7 @@ module.exports = {
                 status: req.body.status
             })
             .then(() => {
-                Quotation.findOne({
+                quotationModel.findOne({
                     _id: req.params.id
                 }).then(answer => {
                     res.send(answer);
@@ -135,7 +135,7 @@ module.exports = {
                 status: req.body.status
             })
             .then(() => {
-                Quotation.findOne({
+                quotationModel.findOne({
                     _id: req.params.id
                 }).then(answer => {
                     res.send(answer);
@@ -160,15 +160,12 @@ module.exports = {
                 })
             } else {
                 console.log({
-
                     $push: {
                         details: {
                             description1: req.body.description1,
                             quantity1: req.body.quantity1,
                         }
                     }
-
-
                 })
                 res.json({
                     state: 'yes'
