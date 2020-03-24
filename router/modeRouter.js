@@ -9,6 +9,6 @@ router.get("/getByID/:id", modeController.getByID);
 router.delete("/delete/:id", modeController.deleteProduct);
 router.put("/update/:id", upload.single("image"), modeController.UpdateProduct);
 router.get("/getImage/:avatar", modeController.getFile);
-router.post('/upload', upload.single('image'), modeController.Upload);
+router.post('/upload/:id', upload.single('image'), modeController.Upload);
 
 module.exports = router;

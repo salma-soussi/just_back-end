@@ -1,4 +1,4 @@
-const infoModel = require("../Models/informatiqueModel"); 
+const infoModel = require("../Models/informatiqueModel");
 const multer = require("multer");
 var fs = require("fs");
 const upload = multer({ dest: __dirname + "/uploads/images/" })
@@ -90,17 +90,34 @@ module.exports = {
         res.sendFile(__dirname + "/uploads/images/" + req.params.avatar)
     },
     Upload: function (req, res) {
-        var file = __dirname + '/uploads/' + req.file.originalname
+        var file = __dirname + '/uploads/images/' + req.file.originalname
         fs.readFile(req.file.path, function (err, data) {
             fs.writeFile(file, data, function (err) {
                 if (err) {
-                    var response =
-                    {
+                    var response = {
                         message: 'sorry',
                         filename: req.file.originalname
                     }
                 } else {
-                    res.json({ state: "ok" })
+                    infoModel.updateOne({
+                        _id: req.params.id
+                    }, {
+                        image: req.file.originalname,
+                    },
+                        function (err, list) {
+                            if (err) {
+                                res.json({
+                                    state: "no",
+                                    msg: "error" + err
+                                });
+                            } else {
+                                res.json({
+                                    state: "OK",
+                                    msg: "done ! image updated"
+                                });
+                            }
+                        }
+                    );
                 }
             })
         })

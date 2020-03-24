@@ -9,6 +9,6 @@ router.get("/getByID/:id", beautyController.getByID);
 router.delete("/delete/:id", beautyController.deleteProduct);
 router.put("/update/:id", upload.single("image"), beautyController.UpdateProduct);
 router.get("/getImage/:avatar", beautyController.getFile);
-router.post('/upload', upload.single('image'), beautyController.Upload);
+router.post('/upload/:id', upload.single('image'), beautyController.Upload);
 
 module.exports = router;
