@@ -18,7 +18,7 @@ module.exports = {
     },
 
     list: function (req, res) {
-        sectorModel.find({}, function (err, listSector) {
+        sectorModel.find({}).populate({path:'category',populate:{path:"subcategory",populate:{path:"product"}}}).exec( function (err, listSector) {
             if (err) {
                 res.json({ state: "no", msg: "no correct" })
             }

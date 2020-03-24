@@ -17,7 +17,7 @@ module.exports = {
     },
 
     list: function (req, res) {
-        subcategoryModel.find({}, function (err, listSubcategory) {
+        subcategoryModel.find({}).populate({path:"product"}).exec(function (err, listSubcategory) {
             if (err) {
                 res.json({ state: "no", msg: "error" })
             }
