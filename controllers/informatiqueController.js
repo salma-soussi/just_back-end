@@ -70,10 +70,11 @@ module.exports = {
     UpdateProduct: function (req, res) {
         infoModel.updateOne({ _id: req.params.id }, { $set: req.body },
             {
-                prix: req.body.prix,
-                nom: req.body.prix,
+                reference: req.body.reference,
+                color: req.body.color,
+                price: req.body.price,
+                name: req.body.name,
                 description: req.body.description,
-                image: req.file.originalname,
             },
             function (err) {
                 if (err) {

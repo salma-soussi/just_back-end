@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const furnitureScheme = mongoose.model("product", new mongoose.Schema(
+const furnitureScheme = mongoose.model("furniture", new mongoose.Schema(
     {
         price: {
             type: Number,
