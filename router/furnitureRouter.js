@@ -1,9 +1,9 @@
 const furnitureController = require("../Controllers/furnitureController");
 const multer = require("multer");
-const upload = multer({ dest: __dirname + "/uploads/images/" })
+const upload = require('../middlwore/upload')
 const router = require("express").Router();
 
-router.post("/add", upload.single("image"), furnitureController.add);
+router.post("/add", upload.array('image',5), furnitureController.add);
 router.get("/list", furnitureController.list);
 router.get("/getByID/:id", furnitureController.getByID);
 router.delete("/delete/:id", furnitureController.deleteProduct);

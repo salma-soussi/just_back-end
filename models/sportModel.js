@@ -13,7 +13,7 @@ const sportScheme = mongoose.model("sport", new mongoose.Schema(
             trim: true
         },
         image: {
-            type: String,
+            type: Array,
             required: true
         },
         reference: {

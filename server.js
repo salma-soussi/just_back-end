@@ -27,6 +27,8 @@ const app = express();
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+app.set('secretKey', 'test')
+app.use(cors('*'))
 
 app.use('/user', userRouter)
 app.use('/seller', sellerRouter)
@@ -46,8 +48,7 @@ app.use('/furniture', furnitureRouter)
 app.use('/sport', sportRouter)
 app.use('/beauty', beautyRouter)
 
-app.set('secretKey', 'test')
-app.use(cors('*'))
+
 
 // the last line
 app.listen(3020, err => {

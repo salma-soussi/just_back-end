@@ -1,9 +1,9 @@
 const beautyController = require("../Controllers/beautyController");
 const multer = require("multer");
-const upload = multer({ dest: __dirname + "/uploads/images/" })
+const upload = require('../middlwore/upload')
 const router = require("express").Router();
 
-router.post("/add", upload.single("image"), beautyController.add);
+router.post("/add", upload.array('image',5), beautyController.add);
 router.get("/list", beautyController.list);
 router.get("/getByID/:id", beautyController.getByID);
 router.delete("/delete/:id", beautyController.deleteProduct);

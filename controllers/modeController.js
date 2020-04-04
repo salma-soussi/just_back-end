@@ -1,39 +1,32 @@
 const modeModel = require("../Models/modeModel");
 const multer = require("multer");
 var fs = require("fs");
-const upload = multer({ dest: __dirname + "/uploads/images/" })
+
 module.exports = {
     add: function (req, res) {
-        var file = __dirname + "/uploads/images/" + req.file.originalname;
-        fs.readFile(req.file.path, function (err, data) {
-            fs.writeFile(file, data, function (error) {
-                if (error) {
-                    var response = {
-                        message: "sorry could not upload file", filename: req.file.originalname
-                    }
-                }
+        const reqFiles = [];
 
-                else {
-                    const product = new modeModel({
-                        reference: req.body.reference,
-                        color: req.body.color,
-                        price: req.body.price,
-                        name: req.body.name,
-                        description: req.body.description,
-                        image: req.file.originalname,
-                    }
-                    )
-                    product.save(function (err) {
-                        if (err) {
-                            res.json({ state: "no", msg: "error" })
-                        }
-                        else {
-                            res.json({ state: "yes", msg: "correct" })
-                        }
-                    })
-                }
-            })
+        for (var i = 0; i < req.files.length; i++) {
+            reqFiles.push(req.files[i].filename)
+        }
+        const product = new modeModel({
+            reference: req.body.reference,
+            color: req.body.color,
+            price: req.body.price,
+            name: req.body.name,
+            description: req.body.description,
+            image: reqFiles,
+        }
+        )
+        product.save(function (err) {
+            if (err) {
+                res.json({ state: "no", msg: err })
+            }
+            else {
+                res.json({ state: "yes", msg: "correct" })
+            }
         })
+
 
     },
 
@@ -100,10 +93,10 @@ module.exports = {
                     }
                 } else {
                     modeModel.updateOne({
-                            _id: req.params.id
-                        }, {
-                            image: req.file.originalname,
-                        },
+                        _id: req.params.id
+                    }, {
+                        image: req.file.originalname,
+                    },
                         function (err, list) {
                             if (err) {
                                 res.json({

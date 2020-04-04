@@ -13,7 +13,7 @@ const furnitureScheme = mongoose.model("furniture", new mongoose.Schema(
             trim: true
         },
         image: {
-            type: String,
+            type: Array,
             required: true
         },
         reference: {

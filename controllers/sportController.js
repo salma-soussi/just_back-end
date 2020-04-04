@@ -4,23 +4,18 @@ var fs = require("fs");
 const upload = multer({ dest: __dirname + "/uploads/images/" })
 module.exports = {
     add: function (req, res) {
-        var file = __dirname + "/uploads/images/" + req.file.originalname;
-        fs.readFile(req.file.path, function (err, data) {
-            fs.writeFile(file, data, function (error) {
-                if (error) {
-                    var response = {
-                        message: "sorry could not upload file", filename: req.file.originalname
-                    }
-                }
+        const reqFiles = [];
 
-                else {
+        for (var i = 0; i < req.files.length; i++) {
+            reqFiles.push(req.files[i].filename)
+        }
                     const product = new sportModel({
                         reference: req.body.reference,
                         color: req.body.color,
                         price: req.body.price,
                         name: req.body.name,
                         description: req.body.description,
-                        image: req.file.originalname,
+                        image: reqFiles,
                     }
                     )
                     product.save(function (err) {
@@ -31,10 +26,6 @@ module.exports = {
                             res.json({ state: "yes", msg: "correct" })
                         }
                     })
-                }
-            })
-        })
-
     },
 
     list: function (req, res) {
