@@ -6,7 +6,7 @@ const upload = multer({
 })
 const router = require('express').Router()
 
-router.post('/add', upload.single("avatar"), buyerController.add)
+router.post('/add', buyerController.add)
 router.get('/list', buyerController.getAll)
 router.get('/getByID/:id', buyerController.getByID)
 router.delete('/delete/:id', buyerController.delete)

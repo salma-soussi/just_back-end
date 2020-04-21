@@ -1,39 +1,41 @@
+const emailmodel = require("../Models/emailmodel");
 const nodemailer = require('nodemailer')
 
 module.exports = {
-    send: (req, res) => {
-        nodemailer.createTestAccount((err, account) => {
-            const htmlEmail = `
-                <h3 style="color: red">Contact Details:</h3>
-                <ul>
-                    <li>${req.body.name}</li>
-                    <li>${req.body.email}</li>
-                </ul>
-                <h3>Message:</h3>
-                <p>${req.body.message}</p>
-            `
-            let transporter = nodemailer.createTransport({
-                host: 'smtp.ethereal.email',
-                port: 587,
-                auth: {
-                    user: 'mason.reinger29@ethereal.email',
-                    pass: 'sZvCt4VCzUAg6Ft27D'
-                }
-            })
-            let mailOptions = {
-                from: 'test@testing.com',
-                to: 'mason.reinger29@ethereal.email',
-                replyTo: 'test@testing.com',
-                subject: req.body.subject,
-                text: req.body.message,
-                html: htmlEmail
+
+
+    sendmail: function (req, res) {
+
+        var transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            service: 'gmail',
+            auth: {
+                user: 'justtn.pfe@gmail.com',
+                pass: 'pfe2019-2020'
             }
-            transporter.sendMail(mailOptions, (err, info) => {
-                if (err) {
-                    return console.log(err)
-                }
-            })
+        });
+
+        var mailOptions = {
+
+            from: ' " Malek maoui " <justtn.pfe@gmail.com> ',
+            to: req.body.to,
+            subject: req.body.subject,
+            text: req.body.text,
+
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                console.log(mailOptions)
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.json(info)
+            }
         })
+        transporter.close();
+
     }
 
 }

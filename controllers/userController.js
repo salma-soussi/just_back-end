@@ -9,45 +9,34 @@ const upload = multer({
 
 module.exports = {
   add: function (req, res) {
-    var file = __dirname + "/uploads/images/" + req.file.originalname;
-    fs.readFile(req.file.path, function (err, data) {
-      fs.writeFile(file, data, function (error) {
-        if (error) {
-          var response = {
-            message: "sorry could not upload file",
-            filename: req.file.originalname
-          }
-        } else {
-          const User = new userModel({
-            companyName: req.body.companyName,
-            sector: req.body.sector,
-            address: req.body.address,
-            phone: req.body.phone,
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            occupation: req.body.occupation,
-            governorate: req.body.governorate,
-            avatar: req.file.originalname,
-            password: req.body.password
-          });
-          User.save(function (err) {
-            if (err) {
-              res.json({
+
+    const user= new userModel({
+        sector: req.body.sector,
+        address: req.body.address,
+        phone: req.body.phone,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        occupation: req.body.occupation,
+        governorate: req.body.governorate,
+        password: req.body.password,
+    });
+    user.save(function (err,data) {
+        if (err) {
+            res.json({
                 state: "No",
                 Msg: "Error" + err
-              });
-            } else {
-              res.json({
+            });
+        } else {
+            console.log(data)
+            res.json({
                 state: "OK",
                 msg: "done ! user was added"
-              });
-            }
-          })
+            });
         }
-      })
     })
-  },
+
+},
   getAll: (req, res) => {
     userModel.find({}, (err, list) => {
       if (err) {

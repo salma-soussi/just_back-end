@@ -7,45 +7,34 @@ const upload = multer({
 
 module.exports = {
     add: function (req, res) {
-        var file = __dirname + "/uploads/images/" + req.file.originalname;
-        fs.readFile(req.file.path, function (err, data) {
-            fs.writeFile(file, data, function (error) {
-                if (error) {
-                    var response = {
-                        message: "sorry could not upload file",
-                        filename: req.file.originalname
-                    }
-                } else {
-                    const buyer = new buyerModel({
-                        companyName: req.body.companyName,
-                        sector: req.body.sector,
-                        address: req.body.address,
-                        phone: req.body.phone,
-                        email: req.body.email,
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        occupation: req.body.occupation,
-                        governorate: req.body.governorate,
-                        avatar: req.file.originalname,
-                        password: req.body.password
-                    });
-                    buyer.save(function (err) {
-                        if (err) {
-                            res.json({
-                                state: "No",
-                                Msg: "Error" + err
-                            });
-                        } else {
-                            res.json({
-                                state: "OK",
-                                msg: "done ! buyer was added"
-                            });
-                        }
-                    })
-                }
-            })
+
+        const buyer = new buyerModel({
+            sector: req.body.sector,
+            address: req.body.address,
+            phone: req.body.phone,
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            occupation: req.body.occupation,
+            governorate: req.body.governorate,
+            password: req.body.password,
+        });
+        buyer.save(function (err,data) {
+            if (err) {
+                res.json({
+                    state: "No",
+                    Msg: "Error" + err
+                });
+            } else {
+                console.log(data)
+                res.json({
+                    state: "OK",
+                    msg: "done ! buyer was added"
+                });
+            }
         })
-    },
+
+    }, 
     getAll: (req, res) => {
         buyerModel.find({}, (err, list) => {
             if (err) {
@@ -60,8 +49,8 @@ module.exports = {
     },
     getByID: (req, res) => {
         buyerModel.findOne({
-                _id: req.params.id
-            },
+            _id: req.params.id
+        },
             (err, list) => {
                 if (err) {
                     res.json({
@@ -76,8 +65,8 @@ module.exports = {
     },
     delete: (req, res) => {
         buyerModel.findOneAndRemove({
-                _id: req.params.id
-            },
+            _id: req.params.id
+        },
             (err, list) => {
                 if (err) {
                     res.json({
@@ -95,21 +84,21 @@ module.exports = {
     },
     Update: function (req, res) {
         buyerModel.updateOne({
-                _id: req.params.id
-            }, {
-                $set: req.body
-            }, {
-                companyName: req.body.companyName,
-                sector: req.body.sector,
-                address: req.body.address,
-                phone: req.body.phone,
-                email: req.body.email,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                occupation: req.body.occupation,
-                governorate: req.body.governorate,
-                password: req.body.password
-            },
+            _id: req.params.id
+        }, {
+            $set: req.body
+        }, {
+            companyName: req.body.companyName,
+            sector: req.body.sector,
+            address: req.body.address,
+            phone: req.body.phone,
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            occupation: req.body.occupation,
+            governorate: req.body.governorate,
+            password: req.body.password
+        },
             function (err, list) {
                 if (err) {
                     res.json({
@@ -139,10 +128,10 @@ module.exports = {
                     }
                 } else {
                     buyerModel.updateOne({
-                            _id: req.params.id
-                        }, {
-                            avatar: req.file.originalname,
-                        },
+                        _id: req.params.id
+                    }, {
+                        avatar: req.file.originalname,
+                    },
                         function (err, list) {
                             if (err) {
                                 res.json({
