@@ -10,33 +10,33 @@ const upload = multer({
 module.exports = {
   add: function (req, res) {
 
-    const user= new userModel({
-        sector: req.body.sector,
-        address: req.body.address,
-        phone: req.body.phone,
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        occupation: req.body.occupation,
-        governorate: req.body.governorate,
-        password: req.body.password,
+    const user = new userModel({
+      sector: req.body.sector,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      occupation: req.body.occupation,
+      governorate: req.body.governorate,
+      password: req.body.password,
     });
-    user.save(function (err,data) {
-        if (err) {
-            res.json({
-                state: "No",
-                Msg: "Error" + err
-            });
-        } else {
-            console.log(data)
-            res.json({
-                state: "OK",
-                msg: "done ! user was added"
-            });
-        }
+    user.save(function (err, data) {
+      if (err) {
+        res.json({
+          state: "No",
+          Msg: "Error" + err
+        });
+      } else {
+        console.log(data)
+        res.json({
+          state: "OK",
+          msg: "done ! user was added"
+        });
+      }
     })
 
-},
+  },
   getAll: (req, res) => {
     userModel.find({}, (err, list) => {
       if (err) {
@@ -51,8 +51,8 @@ module.exports = {
   },
   getByID: (req, res) => {
     userModel.findOne({
-        _id: req.params.id
-      },
+      _id: req.params.id
+    },
       (err, list) => {
         if (err) {
           res.json({
@@ -68,8 +68,8 @@ module.exports = {
   deleteUser: (req, res) => {
     //delete  findoneAndRemove  findOneDelete
     userModel.findOneAndRemove({
-        _id: req.params.id
-      },
+      _id: req.params.id
+    },
       (err, list) => {
         if (err) {
           res.json({
@@ -87,21 +87,21 @@ module.exports = {
   },
   UpdateUser: function (req, res) {
     userModel.updateOne({
-        _id: req.params.id
-      }, {
-        $set: req.body
-      }, {
-        companyName: req.body.companyName,
-        sector: req.body.sector,
-        address: req.body.address,
-        phone: req.body.phone,
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        occupation: req.body.occupation,
-        governorate: req.body.governorate,
-        password: req.body.password
-      },
+      _id: req.params.id
+    }, {
+      $set: req.body
+    }, {
+      companyName: req.body.companyName,
+      sector: req.body.sector,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      occupation: req.body.occupation,
+      governorate: req.body.governorate,
+      password: req.body.password
+    },
       function (err, list) {
         if (err) {
           res.json({
@@ -131,10 +131,10 @@ module.exports = {
           }
         } else {
           userModel.updateOne({
-              _id: req.params.id
-            }, {
-              avatar: req.file.originalname,
-            },
+            _id: req.params.id
+          }, {
+            avatar: req.file.originalname,
+          },
             function (err, list) {
               if (err) {
                 res.json({
@@ -154,38 +154,39 @@ module.exports = {
     })
   },
   Authentication: function (req, res) {
+
     userModel.findOne({
-        email: req.body.email
-      },
-      function (err, userInfo) {
-        if (err) {
-          console.log(err);
-        } else {
-          if (bcrypt.compare(req.body.password, userInfo.password)) {
+      email: req.body.email
+    }, (err,user) => {
+      if (!user) {
+        return res.status(404).json('user not found')
+      } else {
+        return bcrypt.compare(req.body.password, user.password).then(isMatch => {
+          if (isMatch) {
             const token = jwt.sign({
-                id: userInfo._id
-              },
+              id: user._id
+            },
               req.app.get("secretKey"), {
-                expiresIn: "1h"
-              }
+              expiresIn: "1h"
+            }
             );
+            console.log("user found")
             res.json({
               state: "ok",
               msg: "user found",
-              date: {
-                user: userInfo,
+              data: {
+                user: user,
                 token
-              }
-            });
-          } else {
-            res.json({
-              state: "no",
-              msg: "invalid password",
-              data: null
-            });
+              },
+            }
+            );
+          } else {           
+            return res.status(400).json('password incorrect')
           }
         }
+        )
       }
+    }
     );
   }
 };

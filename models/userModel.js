@@ -16,11 +16,11 @@ const userScheme = mongoose.model(
       required: true,
       trim: true
     },
-  //   companyName: {
-  //     type: String,
-  //  required:true,
-  //     trim: true
-  //   },
+    companyName: {
+      type: String,
+      required: true,
+      trim: true
+    },
     address: {
       type: String,
       required: true,

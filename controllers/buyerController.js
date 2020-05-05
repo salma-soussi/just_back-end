@@ -8,6 +8,8 @@ const upload = multer({
 module.exports = {
     add: function (req, res) {
 
+        console.log(req.body)
+
         const buyer = new buyerModel({
             sector: req.body.sector,
             address: req.body.address,
@@ -19,9 +21,10 @@ module.exports = {
             governorate: req.body.governorate,
             password: req.body.password,
         });
-        buyer.save(function (err,data) {
+        buyer.save(function (err, data) {
             if (err) {
                 res.json({
+                    
                     state: "No",
                     Msg: "Error" + err
                 });
@@ -34,7 +37,7 @@ module.exports = {
             }
         })
 
-    }, 
+    },
     getAll: (req, res) => {
         buyerModel.find({}, (err, list) => {
             if (err) {
