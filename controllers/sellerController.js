@@ -7,44 +7,37 @@ const upload = multer({
 
 module.exports = {
     add: function (req, res) {
-        var file = __dirname + "/uploads/images/" + req.file.originalname;
-        fs.readFile(req.file.path, function (err, data) {
-            fs.writeFile(file, data, function (error) {
-                if (error) {
-                    var response = {
-                        message: "sorry could not upload file",
-                        filename: req.file.originalname
-                    }
-                } else {
-                    const seller = new sellerModel({
-                        companyName: req.body.companyName,
-                        sector: req.body.sector,
-                        address: req.body.address,
-                        phone: req.body.phone,
-                        email: req.body.email,
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        occupation: req.body.occupation,
-                        governorate: req.body.governorate,
-                        avatar: req.file.originalname,
-                        password: req.body.password
-                    });
-                    seller.save(function (err) {
-                        if (err) {
-                            res.json({
-                                state: "No",
-                                Msg: "Error" + err
-                            });
-                        } else {
-                            res.json({
-                                state: "OK",
-                                msg: "done ! seller was added"
-                            });
-                        }
-                    })
-                }
-            })
+
+        console.log(req.body)
+
+        const seller = new sellerModel({
+            companyName: req.body.companyName,
+            sector: req.body.sector,
+            address: req.body.address,
+            phone: req.body.phone,
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            occupation: req.body.occupation,
+            governorate: req.body.governorate,
+            password: req.body.password,
+        });
+        seller.save(function (err, data) {
+            if (err) {
+                res.json({
+                    
+                    state: "No",
+                    Msg: "Error" + err
+                });
+            } else {
+                console.log(data)
+                res.json({
+                    state: "OK",
+                    msg: "done ! seller was added"
+                });
+            }
         })
+
     },
     getAll: (req, res) => {
         sellerModel.find({}, (err, list) => {

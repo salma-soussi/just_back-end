@@ -161,6 +161,7 @@ module.exports = {
       if (!user) {
         return res.status(404).json('user not found')
       } else {
+        console.log(user.__t)
         return bcrypt.compare(req.body.password, user.password).then(isMatch => {
           if (isMatch) {
             const token = jwt.sign({

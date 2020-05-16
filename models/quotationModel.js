@@ -44,7 +44,7 @@ const details = new mongoose.Schema({
     },
 
 })
- 
+
 const quotationScheme = mongoose.model(
     "quotation",
     new mongoose.Schema({
@@ -57,7 +57,7 @@ const quotationScheme = mongoose.model(
             trim: true
         },
         quotationNUM: {
-            type: Number,
+            type: String,
             required: true,
             trim: true
         },

@@ -11,6 +11,7 @@ module.exports = {
         console.log(req.body)
 
         const buyer = new buyerModel({
+            companyName: req.body.companyName,
             sector: req.body.sector,
             address: req.body.address,
             phone: req.body.phone,
