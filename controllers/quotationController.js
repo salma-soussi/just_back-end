@@ -91,7 +91,8 @@ module.exports = {
             totalPrice5: req.body.totalPrice5,
             tax: req.body.tax,
             total: req.body.total,
-            subtotal: req.body.subtotal
+            subtotal: req.body.subtotal,
+            status: req.body.status
         },
             function (err, list) {
                 if (err) {

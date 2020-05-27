@@ -17,7 +17,7 @@ const notificationScheme = mongoose.model("notification", new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    description: {
+    description1: {
         type: String,
         required: true,
         trim: true

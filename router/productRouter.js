@@ -1,6 +1,6 @@
 const productController = require("../Controllers/productController");
 const multer = require("multer");
-const upload = multer({ dest: __dirname + "/uploads/images/" })
+const upload = multer({ dest:    + "/uploads/images/" })
 const router = require("express").Router();
 
 router.post("/add", upload.single("image"), productController.add);

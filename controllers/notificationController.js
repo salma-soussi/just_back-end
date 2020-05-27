@@ -7,18 +7,20 @@ module.exports = {
             quotationNUM: req.body.quotationNUM,
             content: req.body.content,
             time: req.body.time,
-            description: req.body.description,
+            description1: req.body.description1,
             type: req.body.type,
             seen: req.body.seen,
+            status: req.body.status,
 
         });
-        notification.save(function (err) {
+        notification.save(function (err, data) {
             if (err) {
                 res.json({
                     state: "No",
                     Msg: "Error :" + err
                 });
             } else {
+                console.log(data)
                 res.json({
 
                     state: "OK",
@@ -31,7 +33,7 @@ module.exports = {
         var answerNotif = new notificationModel({
             quotationNum: req.body.quotationNum,
             status: req.body.status,
-            
+
         })
         answerNotif.save((err, answernotif) => {
             if (err) {
@@ -80,10 +82,10 @@ module.exports = {
     },
     Seen: function (req, res) {
         notificationModel.findOneAndUpdate({
-                seen: 'no'
-            }, {
-                seen: req.body.seen
-            })
+            seen: 'no'
+        }, {
+            seen: req.body.seen
+        })
             .then(() => {
                 notificationModel.findOne({
                     seen: 'no'
@@ -94,8 +96,8 @@ module.exports = {
     },
     getAll: (req, res) => {
         notificationModel.find({}).sort({
-                time: 'desc'
-            }).limit(10)
+            time: 'desc'
+        }).limit(10)
             .then((notifications) => {
                 res.send(notifications)
             })
