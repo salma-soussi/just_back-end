@@ -145,6 +145,10 @@ module.exports = {
         }, {
             $push: {
                 details: {
+                    name1: req.body.name1,
+                    name2: req.body.name2,
+                    name3: req.body.name3,
+                    name4: req.body.name4,
                     description1: req.body.description1,
                     description2: req.body.description2,
                     description3: req.body.description3,

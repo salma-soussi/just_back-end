@@ -22,6 +22,11 @@ const notificationScheme = mongoose.model("notification", new mongoose.Schema({
         required: true,
         trim: true
     },
+    name1: {
+        type: String,
+        required: true,
+        trim: true
+    },
     status: {
         type: String,
         required: true,

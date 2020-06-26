@@ -8,6 +8,7 @@ module.exports = {
             content: req.body.content,
             time: req.body.time,
             description1: req.body.description1,
+            name1: req.body.name1,
             type: req.body.type,
             seen: req.body.seen,
             status: req.body.status,
@@ -51,6 +52,7 @@ module.exports = {
             content: req.body.content,
             time: req.body.time,
             description1: req.body.description1,
+            name1: req.body.name1,
             type: req.body.type,
             seen: req.body.seen,
         })
@@ -69,6 +71,7 @@ module.exports = {
             content: req.body.content,
             time: req.body.time,
             description1: req.body.description1,
+            name1: req.body.name1,
             type: req.body.type,
             seen: req.body.seen,
         })

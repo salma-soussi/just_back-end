@@ -27,7 +27,7 @@ const userScheme = mongoose.model(
       trim: true
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
       trim: true
     },

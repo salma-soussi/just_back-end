@@ -10,11 +10,19 @@ const details = new mongoose.Schema({
         type: String,
         required: true
     },
+    name1:{
+        type: String,
+        required: true
+    },
     description2: {
         type: String,
         required: true,
     },
     quantity2: {
+        type: String,
+        required: true
+    },
+    name2:{
         type: String,
         required: true
     },
@@ -26,11 +34,19 @@ const details = new mongoose.Schema({
         type: String,
         required: true
     },
+    name3:{
+        type: String,
+        required: true
+    },
     description4: {
         type: String,
         required: true,
     },
     quantity4: {
+        type: String,
+        required: true
+    },
+    name4:{
         type: String,
         required: true
     },
