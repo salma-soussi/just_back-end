@@ -157,9 +157,9 @@ module.exports = {
 
     userModel.findOne({
       email: req.body.email
-    }, (err,user) => {
+    }, (err, user) => {
       if (!user) {
-        return res.status(404).json('user not found')
+        return res.status(404).json('email not found')
       } else {
         console.log(user.__t)
         return bcrypt.compare(req.body.password, user.password).then(isMatch => {
@@ -181,7 +181,7 @@ module.exports = {
               },
             }
             );
-          } else {           
+          } else {
             return res.status(400).json('password incorrect')
           }
         }

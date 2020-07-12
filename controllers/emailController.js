@@ -18,7 +18,7 @@ module.exports = {
 
         var mailOptions = {
 
-            from: ' " Malek maoui " <justtn.pfe@gmail.com> ',
+            from: ' " salma soussi " <justtn.pfe@gmail.com> ',
             to: req.body.to,
             subject: req.body.subject,
             text: req.body.text,
