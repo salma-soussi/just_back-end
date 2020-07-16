@@ -1,9 +1,7 @@
 const sellerController = require('../controllers/sellerController')
-
+const upload = require('../middlwore/upload')
 const multer = require("multer");
-const upload = multer({
-    dest: __dirname + "/uploads/images/"
-})
+
 
 const router = require('express').Router()
 

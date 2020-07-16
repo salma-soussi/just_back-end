@@ -1,6 +1,7 @@
 const beautyController = require("../Controllers/beautyController");
 const multer = require("multer");
 const upload = require('../middlwore/upload')
+
 const router = require("express").Router();
 
 router.post("/add", upload.array('image',5), beautyController.add);

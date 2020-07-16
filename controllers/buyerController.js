@@ -1,5 +1,6 @@
 const buyerModel = require("../models/buyerModel");
 const multer = require("multer");
+const bcrypt = require("bcryptjs");
 var fs = require("fs");
 const upload = multer({
     dest: __dirname + "/uploads/images/"
@@ -87,11 +88,18 @@ module.exports = {
         );
     },
     Update: function (req, res) {
+        
+        let tes={$set: req.body}
+        if(req.body.password){
+            const pass = bcrypt.hashSync(req.body.password, 10)
+            tes={$set: req.body,password: pass}
+        }
+
         buyerModel.updateOne({
             _id: req.params.id
-        }, {
-            $set: req.body
-        }, {
+        },
+        tes, 
+        {
             companyName: req.body.companyName,
             sector: req.body.sector,
             address: req.body.address,
@@ -122,36 +130,31 @@ module.exports = {
         res.sendFile(__dirname + "/uploads/images/" + req.params.avatar)
     },
     Upload: function (req, res) {
-        var file = __dirname + '/uploads/' + req.file.originalname
-        fs.readFile(req.file.path, function (err, data) {
-            fs.writeFile(file, data, function (err) {
-                if (err) {
-                    var response = {
-                        message: 'sorry',
-                        filename: req.file.originalname
+        if (req.file) {
+            console.log("avatar")
+            console.log(req.file)
+            buyerModel.updateOne({
+                _id: req.params.id
+            }, {
+                avatar: req.file.filename,
+            },
+                function (err, list) {
+                    if (err) {
+                        res.json({
+                            state: "no",
+                            msg: "error" + err
+                        });
+                    } else {
+                        res.json({
+                            state: "OK",
+                            msg: "done ! avatar updated"
+                        });
                     }
-                } else {
-                    buyerModel.updateOne({
-                        _id: req.params.id
-                    }, {
-                        avatar: req.file.originalname,
-                    },
-                        function (err, list) {
-                            if (err) {
-                                res.json({
-                                    state: "no",
-                                    msg: "error" + err
-                                });
-                            } else {
-                                res.json({
-                                    state: "OK",
-                                    msg: "done ! avatar updated"
-                                });
-                            }
-                        }
-                    );
                 }
-            })
-        })
+            );
+        } else {
+            console.log("errrrrr avatar")
+            console.log(req.file)
+        }
     }
 };

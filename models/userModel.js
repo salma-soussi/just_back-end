@@ -56,9 +56,9 @@ const userScheme = mongoose.model(
       required: true,
       trim: true
     },
-    // avatar: {
-    //   type: String,
-    // },
+    avatar: {
+      type: String,
+    },
     password: {
       type: String,
       required: true,
@@ -67,5 +67,7 @@ const userScheme = mongoose.model(
   }).pre("save", function () {
     this.password = bcrypt.hashSync(this.password, 10);
   })
+
+  
 );
 module.exports = userScheme;
