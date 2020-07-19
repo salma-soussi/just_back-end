@@ -1,5 +1,7 @@
 const sellerModel = require("../models/sellerModel");
 const multer = require("multer");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 var fs = require("fs");
 const upload = multer({
     dest: __dirname + "/uploads/images/"
@@ -87,6 +89,11 @@ module.exports = {
         );
     },
     Update: function (req, res) {
+        let tes = { $set: req.body }
+        if (req.body.password) {
+            const pass = bcrypt.hashSync(req.body.password, 10)
+            tes = { $set: req.body, password: pass }
+        }
         sellerModel.updateOne({
             _id: req.params.id
         }, {
@@ -148,6 +155,48 @@ module.exports = {
             console.log("errrrrr avatar")
             console.log(req.file)
         }
-    }
+    },
+    Authentication: function (req, res) {
+
+        sellerModel.findOne({
+          email: req.body.email
+        }, (err, user) => {
+          if (!user) {
+            return res.status(404).json('email not found')
+          } else {
+            console.log(user.__t)
+            if (user.__t === "seller"){
+                return bcrypt.compare(req.body.password, user.password).then(isMatch => {
+                    if (isMatch) {
+                      const token = jwt.sign({
+                        id: user._id
+                      },
+                        req.app.get("secretKey"), {
+                        expiresIn: "1h"
+                      }
+                      );
+                      console.log("user found")
+                      res.json({
+                        state: "ok",
+                        msg: "user found",
+                        data: {
+                          user: user,
+                          token
+                        },
+                      }
+                      );
+                    } else {
+                      return res.status(400).json('password incorrect')
+                    }
+                  }
+                  )
+            }else{
+                alert("your are not a seller, you are a buyer")
+            }
+            
+          }
+        }
+        );
+      }
 
 };

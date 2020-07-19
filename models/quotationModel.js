@@ -10,7 +10,7 @@ const details = new mongoose.Schema({
         type: String,
         required: true
     },
-    name1:{
+    name1: {
         type: String,
         required: true
     },
@@ -22,7 +22,7 @@ const details = new mongoose.Schema({
         type: String,
         required: true
     },
-    name2:{
+    name2: {
         type: String,
         required: true
     },
@@ -34,7 +34,7 @@ const details = new mongoose.Schema({
         type: String,
         required: true
     },
-    name3:{
+    name3: {
         type: String,
         required: true
     },
@@ -46,7 +46,7 @@ const details = new mongoose.Schema({
         type: String,
         required: true
     },
-    name4:{
+    name4: {
         type: String,
         required: true
     },
@@ -168,7 +168,19 @@ const quotationScheme = mongoose.model(
         totalPrice5: {
             type: Number,
             trim: true
-        }
+        },
+        file1: {
+            type: String
+        },
+        file2: {
+            type: String
+        },
+        file3: {
+            type: String
+        },
+        file4: {
+            type: String
+        },
     })
 );
 module.exports = quotationScheme;

@@ -1,10 +1,12 @@
 const buyerModel = require("../models/buyerModel");
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 var fs = require("fs");
 const upload = multer({
     dest: __dirname + "/uploads/images/"
 })
+
 
 module.exports = {
     add: function (req, res) {
@@ -26,7 +28,7 @@ module.exports = {
         buyer.save(function (err, data) {
             if (err) {
                 res.json({
-                    
+
                     state: "No",
                     Msg: "Error" + err
                 });
@@ -88,29 +90,29 @@ module.exports = {
         );
     },
     Update: function (req, res) {
-        
-        let tes={$set: req.body}
-        if(req.body.password){
+
+        let tes = { $set: req.body }
+        if (req.body.password) {
             const pass = bcrypt.hashSync(req.body.password, 10)
-            tes={$set: req.body,password: pass}
+            tes = { $set: req.body, password: pass }
         }
 
         buyerModel.updateOne({
             _id: req.params.id
         },
-        tes, 
-        {
-            companyName: req.body.companyName,
-            sector: req.body.sector,
-            address: req.body.address,
-            phone: req.body.phone,
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            occupation: req.body.occupation,
-            governorate: req.body.governorate,
-            password: req.body.password
-        },
+            tes,
+            {
+                companyName: req.body.companyName,
+                sector: req.body.sector,
+                address: req.body.address,
+                phone: req.body.phone,
+                email: req.body.email,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                occupation: req.body.occupation,
+                governorate: req.body.governorate,
+                password: req.body.password
+            },
             function (err, list) {
                 if (err) {
                     res.json({
@@ -156,5 +158,48 @@ module.exports = {
             console.log("errrrrr avatar")
             console.log(req.file)
         }
+    },
+    Authentication: function (req, res) {
+
+        buyerModel.findOne({
+            email: req.body.email
+        }, (err, user) => {
+            if (!user) {
+                
+                // return res.status(404).json('email not found')
+                return res.status(404).json( {msg:'email not found'})
+                
+            } else {
+                console.log(user.__t)
+               
+                    return bcrypt.compare(req.body.password, user.password).then(isMatch => {
+                        if (isMatch) {
+                            const token = jwt.sign({
+                                id: user._id
+                            },
+                                req.app.get("secretKey"), {
+                                expiresIn: "1h"
+                            }
+                            );
+                            console.log("user found")
+                            res.json({
+                                state: "ok",
+                                msg: "user found",
+                                data: {
+                                    user: user,
+                                    token
+                                },
+                            }
+                            );
+                        } else {
+                            return res.status(400).json('password incorrect')
+                        }
+                    }
+                    )
+               
+
+            }
+        }
+        );
     }
 };

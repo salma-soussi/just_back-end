@@ -2,6 +2,7 @@ const quotationModel = require("../models/quotationModel");
 
 module.exports = {
     add: function (req, res) {
+
         const Quotation = new quotationModel({
             status: req.body.status,
             validUntil: req.body.validUntil,
@@ -77,22 +78,20 @@ module.exports = {
         quotationModel.findByIdAndUpdate({
             _id: req.params.id
         }, {
-            $set: req.body
+            $set: req.body,
+
         }, {
             unitPrice1: req.body.unitPrice1,
             unitPrice2: req.body.unitPrice2,
             unitPrice3: req.body.unitPrice3,
             unitPrice4: req.body.unitPrice4,
-            unitPrice5: req.body.unitPrice5,
             totalPrice1: req.body.totalPrice1,
             totalPrice2: req.body.totalPrice2,
             totalPrice3: req.body.totalPrice3,
             totalPrice4: req.body.totalPrice4,
-            totalPrice5: req.body.totalPrice5,
             tax: req.body.tax,
             total: req.body.total,
             subtotal: req.body.subtotal,
-            status: req.body.status
         },
             function (err, list) {
                 if (err) {
@@ -108,7 +107,9 @@ module.exports = {
                 }
             }
         );
+
     },
+
     acceptedStatus: function (req, res) {
         quotationModel
             .findByIdAndUpdate({
@@ -186,5 +187,103 @@ module.exports = {
                 })
             }
         })
+    },
+    pushFile1: function (req, res) {
+
+        if (req.file) {
+            quotationModel.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                file1: req.file.filename,
+            }, function (err) {
+                if (err) {
+                    res.json({
+                        state: 'no',
+                        msg: 'vous avez un erreur' + err
+
+                    })
+                } else {
+                    console.log(req.file.filename)
+
+                }
+            })
+        }
+    },
+    pushFile2: function (req, res) {
+
+
+        if (req.file) {
+            quotationModel.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                file2: req.file.filename,
+
+            }, function (err) {
+                if (err) {
+                    res.json({
+                        state: 'no',
+                        msg: 'vous avez un erreur' + err
+
+                    })
+                } else {
+                    console.log(
+                        req.file.filename
+                    )
+                    console.log(req.file.filename)
+
+                }
+            })
+        }
+    },
+    pushFile3: function (req, res) {
+
+        if (req.file) {
+            quotationModel.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                file3: req.file.filename,
+
+            }, function (err) {
+                if (err) {
+                    res.json({
+                        state: 'no',
+                        msg: 'vous avez un erreur' + err
+
+                    })
+                } else {
+                    console.log(
+                        req.file.filename
+                    )
+
+                }
+            })
+        }
+    },
+    pushFile4: function (req, res) {
+
+        if (req.file) {
+            quotationModel.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                file4: req.file.filename,
+
+            }, function (err) {
+                if (err) {
+                    res.json({
+                        state: 'no',
+                        msg: 'vous avez un erreur' + err
+
+                    })
+                } else {
+                    console.log(
+                        req.file.filename
+                    )
+
+                }
+            })
+        }
+    },
+    getfile: function (req, res) {
+        res.sendFile(__dirname + "/uploads/file/" + req.params.file)
     },
 };

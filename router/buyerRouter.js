@@ -12,5 +12,7 @@ router.delete('/delete/:id', buyerController.delete)
 router.put('/update/:id', buyerController.Update)
 router.get("/getImage/:avatar", buyerController.getfile);
 router.post('/upload/:id', upload.single('avatar'), buyerController.Upload);
+router.post('/authentication', buyerController.Authentication)
+
 
 module.exports = router
