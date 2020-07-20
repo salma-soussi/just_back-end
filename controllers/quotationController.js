@@ -283,7 +283,14 @@ module.exports = {
             })
         }
     },
-    getfile: function (req, res) {
-        res.sendFile(__dirname + "/uploads/file/" + req.params.file)
+    getfile1: function (req, res) {
+        res.sendFile(__dirname + "/uploads/file/" + req.params.file1)
+    },
+    getfile2: function (req, res) {
+        res.sendFile(__dirname + "/uploads/file/" + req.params.file2)
+    },getfile3: function (req, res) {
+        res.sendFile(__dirname + "/uploads/file/" + req.params.file3)
+    },getfile4: function (req, res) {
+        res.sendFile(__dirname + "/uploads/file/" + req.params.file4)
     },
 };
